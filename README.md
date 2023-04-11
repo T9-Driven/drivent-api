@@ -1,4 +1,4 @@
-# drivent-back.
+# drivent-back-prisma
 
 Back-end for Driven.t, an event management solution.
 
