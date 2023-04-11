@@ -5,16 +5,12 @@ import supertest from 'supertest';
 import { createEvent, createUser } from '../factories';
 import { cleanDb } from '../helpers';
 import { duplicatedEmailError } from '@/services/users-service';
-import app, { init, close } from '@/app';
 import { prisma } from '@/config';
+import app, { init } from '@/app';
 
 beforeAll(async () => {
   await init();
   await cleanDb();
-});
-
-afterAll(async () => {
-  await close();
 });
 
 const server = supertest(app);
