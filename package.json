@@ -15,7 +15,7 @@
     "test": "cross-env NODE_ENV=test jest --passWithNoTests --runInBand",
     "test:migration:run": "npm run test:load-envs prisma migrate deploy",
     "test:migration:generate": "npm run test:load-envs prisma migrate dev",
-    "test:watch": "jest --watch --passWithNoTests --runInBand",
+    "test:watch": "cross-env NODE_ENV=test jest --watch --passWithNoTests --runInBand",
     "test:load-envs": "dotenv -e .env.test",
     "test:seed": "npm run test:load-envs prisma db seed",
     "dev:load-envs": "dotenv -e .env.development",
