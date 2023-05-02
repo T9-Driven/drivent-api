@@ -1,6 +1,5 @@
 /* eslint-disable quotes */
-import faker from '@faker-js/faker';
-import { Address, Booking, Enrollment, Room, Ticket, TicketStatus, TicketType } from '@prisma/client';
+import { Booking, Room } from '@prisma/client';
 import { prisma } from '@/config';
 
 type CreateBookingParams = {
@@ -20,7 +19,7 @@ export function createBooking({ roomId, userId }: CreateBookingParams) {
 export function getBookingReturn() {
   const booking: Booking & { Room: Room } = {
     id: 1,
-    userId: 1,
+    userId: null,
     roomId: 1,
     createdAt: new Date(),
     updatedAt: new Date(),
