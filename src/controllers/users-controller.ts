@@ -1,8 +1,8 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import httpStatus from 'http-status';
 import userService from '@/services/users-service';
 
-export async function usersPost(req: Request, res: Response) {
+export async function usersPost(req: Request, res: Response, next: NextFunction) {
   const { email, password } = req.body;
 
   try {
@@ -12,9 +12,6 @@ export async function usersPost(req: Request, res: Response) {
       email: user.email,
     });
   } catch (error) {
-    if (error.name === 'DuplicatedEmailError') {
-      return res.status(httpStatus.CONFLICT).send(error);
-    }
-    return res.status(httpStatus.BAD_REQUEST).send(error);
+    next(error);
   }
 }

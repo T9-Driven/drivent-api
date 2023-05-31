@@ -1,12 +1,12 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import httpStatus from 'http-status';
 import eventsService from '@/services/events-service';
 
-export async function getDefaultEvent(_req: Request, res: Response) {
+export async function getDefaultEvent(_req: Request, res: Response, next: NextFunction) {
   try {
     const event = await eventsService.getFirstEvent();
     return res.status(httpStatus.OK).send(event);
   } catch (error) {
-    return res.status(httpStatus.NOT_FOUND).send({});
+    next(error);
   }
 }

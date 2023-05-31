@@ -1,9 +1,9 @@
-import { Response } from 'express';
+import { NextFunction, Response } from 'express';
 import httpStatus from 'http-status';
 import { AuthenticatedRequest } from '@/middlewares';
 import paymentsService from '@/services/payments-service';
 
-export async function getPaymentByTicketId(req: AuthenticatedRequest, res: Response) {
+export async function getPaymentByTicketId(req: AuthenticatedRequest, res: Response, next: NextFunction) {
   try {
     const ticketId = Number(req.query.ticketId);
     const { userId } = req;
@@ -15,14 +15,11 @@ export async function getPaymentByTicketId(req: AuthenticatedRequest, res: Respo
 
     return res.status(httpStatus.OK).send(payment);
   } catch (error) {
-    if (error.name === 'UnauthorizedError') {
-      return res.sendStatus(httpStatus.UNAUTHORIZED);
-    }
-    return res.sendStatus(httpStatus.NOT_FOUND);
+    next(error);
   }
 }
 
-export async function paymentProcess(req: AuthenticatedRequest, res: Response) {
+export async function paymentProcess(req: AuthenticatedRequest, res: Response, next: NextFunction) {
   const { userId } = req;
   const { ticketId, cardData } = req.body;
 
@@ -34,9 +31,6 @@ export async function paymentProcess(req: AuthenticatedRequest, res: Response) {
 
     return res.status(httpStatus.OK).send(payment);
   } catch (error) {
-    if (error.name === 'UnauthorizedError') {
-      return res.sendStatus(httpStatus.UNAUTHORIZED);
-    }
-    return res.sendStatus(httpStatus.NOT_FOUND);
+    next(error);
   }
 }
